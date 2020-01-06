@@ -1,0 +1,32 @@
+/* 全局样式 */
+
+/*页面布局的样式*/
+.wrap {
+    min-width: 1200px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    .section {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+        .aside-content {
+            display: flex;
+        }
+        .content-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            .main-content {
+                flex: 1;
+                padding: 20px;
+            }
+            .copyright {
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+            }
+        }
+    }
+}

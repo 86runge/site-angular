@@ -1,0 +1,16 @@
+<div *ngIf="isLogin" class="wrap">
+    <mysite-header class="header-content"></mysite-header>
+    <section class="section clearfix">
+        <mysite-aside-menu class="aside-content"></mysite-aside-menu>
+        <div class="content-box">
+            <div class="main-content">
+                <router-outlet></router-outlet>
+            </div>
+            <div class="copyright">@Copyright 2016 Iowa 保留所有权限</div>
+        </div>
+    </section>
+</div>
+
+<div *ngIf="!isLogin" class="wrap">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,116 @@
+<!--页码-->
+<h2>分页器</h2>
+<nz-pagination [nzPageIndex]="2" [nzTotal]="500" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+
+<nz-divider></nz-divider>
+
+<h2>迷你分页器</h2>
+<nz-pagination [(nzPageIndex)]="current" [nzTotal]="400" [nzSize]="'small'"
+               [nzShowTotal]="totalTemplate" nzShowSizeChanger nzShowQuickJumper></nz-pagination>
+<ng-template #totalTemplate let-total>总共 {{total}} 条数据</ng-template>
+
+<nz-divider></nz-divider>
+
+<!--步骤条-->
+<h2>步骤条</h2>
+<nz-steps [nzCurrent]="current">
+    <nz-step nzTitle="Finished"></nz-step>
+    <nz-step nzTitle="In Progress"></nz-step>
+    <nz-step nzTitle="Waiting"></nz-step>
+</nz-steps>
+
+<div class="steps-content">{{ index }}</div>
+<div class="steps-action">
+    <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+        <span>Previous</span>
+    </button>
+    <button nz-button nzType="default" (click)="next()" *ngIf="current < 2">
+        <span>Next</span>
+    </button>
+    <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2">
+        <span>Done</span>
+    </button>
+</div>
+
+<nz-divider></nz-divider>
+
+<h2>步骤条</h2>
+<nz-steps [nzCurrent]="1" nzStatus="error">
+    <nz-step nzTitle="Finished" nzDescription="This is a description."></nz-step>
+    <nz-step nzTitle="In Progress" nzDescription="This is a description."></nz-step>
+    <nz-step nzTitle="Waiting" nzDescription="This is a description."></nz-step>
+</nz-steps>
+
+<nz-divider></nz-divider>
+
+<h3>抽屉</h3>
+<div>
+    <nz-radio-group [(ngModel)]="placement">
+        <label nz-radio nzValue="top">top</label>
+        <label nz-radio nzValue="right">right</label>
+        <label nz-radio nzValue="bottom">bottom</label>
+        <label nz-radio nzValue="left">left</label>
+    </nz-radio-group>
+    <button nz-button nzType="primary" (click)="open()">Open</button>
+    <nz-drawer [nzClosable]="false" [nzVisible]="visible" [nzPlacement]="placement"
+               nzTitle="Basic Drawer" (nzOnClose)="close()">
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+    </nz-drawer>
+</div>
+<nz-divider></nz-divider>
+
+<h3>全局消息提示</h3>
+<div>
+    <button nz-button (click)="createMessage('success')">Success</button>
+    <button nz-button (click)="createMessage('error')">Error</button>
+    <button nz-button (click)="createMessage('warning')">Warning</button>
+</div>
+<nz-divider></nz-divider>
+<div>
+    <button nz-button nzType="info" (click)="showConfirm()">Confirm</button>
+    <button nz-button nzType="dashed" (click)="showDeleteConfirm()">Delete</button>
+</div>
+<nz-divider></nz-divider>
+<div>
+    <button nz-button (click)="info()">Info</button>
+    <button nz-button (click)="success()">Success</button>
+    <button nz-button (click)="error()">Error</button>
+    <button nz-button (click)="warning()">Warning</button>
+</div>
+<nz-divider></nz-divider>
+<div>
+    <ng-template #template>
+        <div class="ant-notification-notice-content">
+            <div class="ant-notification-notice-with-icon">
+                                    <span class="ant-notification-notice-icon"><i nz-icon type="smile"
+                                                                                  style="color: rgb(16, 142, 233);"></i></span>
+                <div class="ant-notification-notice-message">Notification Title</div>
+                <div class="ant-notification-notice-description">
+                    This is the content of the notification. This is the content of the
+                    notification. This is the content of the notification.
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <button nz-button [nzType]="'primary'" (click)="createBasicNotification(template)">Open the
+        notification box
+    </button>
+</div>
+<nz-divider></nz-divider>
+<div>
+    <nz-progress [nzPercent]="30"></nz-progress>
+    <nz-progress [nzPercent]="50" nzStatus="active"></nz-progress>
+    <nz-progress [nzPercent]="70" nzStatus="exception"></nz-progress>
+    <nz-progress [nzPercent]="100"></nz-progress>
+    <nz-progress [nzPercent]="50" [nzShowInfo]="false"></nz-progress>
+    <nz-progress [nzPercent]="75" nzType="circle"></nz-progress>
+    <nz-progress [nzPercent]="70" nzType="circle" nzStatus="exception"></nz-progress>
+    <nz-progress [nzPercent]="100" nzType="circle"></nz-progress>
+    <nz-tooltip nzTitle="3 done / 3 in progress / 4 to do">
+        <nz-progress nz-tooltip [nzPercent]="60" [nzSuccessPercent]="30"></nz-progress>
+    </nz-tooltip>
+</div>
+
+<nz-divider></nz-divider>

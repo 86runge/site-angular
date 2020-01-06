@@ -1,0 +1,46 @@
+<header class="header">
+    <ul nz-menu [nzMode]="'horizontal'">
+        <li nz-menu-item nzDisabled><i nz-icon type="appstore"></i>不可点击</li>
+        <li nz-menu-item>
+            <a href="https://github.com/86runge" target="_blank" rel="noopener noreferrer">连接&nbsp;github.com</a>
+        </li>
+        <li nz-menu-item><i nz-icon type="appstore"></i><a routerLink="/" class="to-index">Index----首页</a></li>
+        <li nz-submenu>
+            <span title><i nz-icon type="mail"></i>NgZorro</span>
+            <ul>
+                <li nz-menu-item><a routerLink="/good/good-list">Navigation</a></li>
+                <li nz-menu-item><a routerLink="/good/good-operate">Data Entry</a></li>
+                <li nz-menu-item><a routerLink="/order/order-list">table</a></li>
+                <li nz-menu-item><a routerLink="/order/order-operate">Data Display</a></li>
+            </ul>
+        </li>
+        <li nz-submenu>
+            <span title><i nz-icon type="setting"></i>Echarts</span>
+            <ul>
+                <li nz-menu-item><a routerLink="/member/my-info">Ecahrts 地图</a></li>
+                <li nz-menu-item><a routerLink="/member/history-record">Ecahrts 其他图表</a></li>
+            </ul>
+        </li>
+        <li nz-submenu>
+            <span title><i nz-icon type="setting"></i>树</span>
+            <ul>
+                <li nz-menu-item><a routerLink="/tree-example/zorro-tree-demo">zorro 树</a></li>
+                <li nz-menu-item><a routerLink="/tree-example/ztree-tree-demo">ztree 树</a></li>
+            </ul>
+        </li>
+        <li nz-submenu class="info-setting">
+            <span title><i nz-icon type="setting"></i>我的···</span>
+            <ul>
+                <li nz-menu-item>
+                    <a>用户设置</a>
+                </li>
+                <li nz-menu-item>
+                    <a>我的消息</a>
+                </li>
+                <li nz-menu-item>
+                    <a (click)="logout()">退出登录</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</header>

@@ -1,0 +1,202 @@
+<h2>标签页</h2>
+<nz-radio-group [(ngModel)]="nzTabPosition">
+    <label nz-radio-button [nzValue]="'top'">Horizontal</label>
+    <label nz-radio-button [nzValue]="'left'">Vertical</label>
+</nz-radio-group>
+<nz-input-number style="float:right;" [nzMin]="0" [nzMax]="10" [(ngModel)]="selectedIndex"></nz-input-number>
+<nz-tabset
+    style="height:220px;"
+    [nzTabPosition]="nzTabPosition"
+    [(nzSelectedIndex)]="selectedIndex"
+    (nzSelectChange)="log([$event])">
+    <nz-tab
+        *ngFor="let tab of tabs"
+        [nzTitle]="tab.name"
+        (nzSelect)="log(['select',tab])"
+        (nzClick)="log(['click',tab])"
+        (nzDeselect)="log(['deselect',tab])">
+        {{ tab.content }}
+    </nz-tab>
+</nz-tabset>
+<ng-template #extraTemplate>
+    <button nz-button>Extra Action</button>
+</ng-template>
+
+<nz-divider></nz-divider>
+
+<h2>tag标签</h2>
+<h4 style="margin-bottom: 16px;">Presets:</h4>
+<div>
+    <nz-tag [nzColor]="'magenta'">magenta</nz-tag>
+    <nz-tag [nzColor]="'red'">red</nz-tag>
+    <nz-tag [nzColor]="'volcano'">volcano</nz-tag>
+    <nz-tag [nzColor]="'orange'">orange</nz-tag>
+    <nz-tag [nzColor]="'gold'">gold</nz-tag>
+    <nz-tag [nzColor]="'lime'">lime</nz-tag>
+    <nz-tag [nzColor]="'green'">green</nz-tag>
+    <nz-tag [nzColor]="'cyan'">cyan</nz-tag>
+    <nz-tag [nzColor]="'blue'">blue</nz-tag>
+    <nz-tag [nzColor]="'geekblue'">geekblue</nz-tag>
+    <nz-tag [nzColor]="'purple'">purple</nz-tag>
+</div>
+<h4 style="margin: 16px 0px;'">Custom:</h4>
+<div>
+    <nz-tag [nzColor]="'#f50'">#f50</nz-tag>
+    <nz-tag [nzColor]="'#2db7f5'">#2db7f5</nz-tag>
+    <nz-tag [nzColor]="'#87d068'">#87d068</nz-tag>
+    <nz-tag [nzColor]="'#108ee9'">#108ee9</nz-tag>
+</div>
+<br>
+<strong>Categories: </strong>
+<nz-tag *ngFor="let tag of hotTags" nzMode="checkable"
+        [nzChecked]="selectedTags.indexOf(tag) > -1" (nzCheckedChange)="handleChange($event, tag)">
+    {{ tag }}
+</nz-tag>
+<p></p>
+<nz-tag
+    *ngFor="let tag of tags; let i = index;"
+    [nzMode]="i === 0 ? 'default' : 'closeable'"
+    (nzAfterClose)="handleClose(tag)">
+    {{ sliceTagName(tag) }}
+</nz-tag>
+<nz-tag
+    *ngIf="!inputVisible"
+    class="editable-tag"
+    (click)="showInput()">
+    <i nz-icon type="plus"></i> New Tag
+</nz-tag>
+<input
+    #inputElement
+    nz-input
+    nzSize="small"
+    *ngIf="inputVisible" type="text"
+    [(ngModel)]="inputValue"
+    style="width: 78px;"
+    (blur)="handleInputConfirm()"
+    (keydown.enter)="handleInputConfirm()">
+
+<nz-divider></nz-divider>
+
+<h2>timeline时间轴</h2>
+<nz-timeline [nzPending]="'Recording...'">
+    <nz-timeline-item nzColor="green">Create a services site 2015-09-01</nz-timeline-item>
+    <nz-timeline-item nzColor="green">Solve initial network problems 2015-09-01</nz-timeline-item>
+    <nz-timeline-item nzColor="red">
+        <p>Solve initial network problems 1</p>
+        <p>Solve initial network problems 2</p>
+        <p>Solve initial network problems 3 2015-09-01</p>
+    </nz-timeline-item>
+    <nz-timeline-item>
+        <p>Technical testing 1</p>
+        <p>Technical testing 2</p>
+        <p>Technical testing 3 2015-09-01</p>
+    </nz-timeline-item>
+    <nz-timeline-item nzColor="red" [nzDot]="dotTemplate">Technical testing 2015-09-01</nz-timeline-item>
+</nz-timeline>
+
+<ng-template #dotTemplate>
+    <i nz-icon type="clock-circle-o" style="font-size: 16px;"></i>
+</ng-template>
+
+<nz-divider></nz-divider>
+
+<h2>tooltip</h2>
+<div style="margin-left:60px;">
+    <button nzTitle="prompt text" nzPlacement="topLeft" nz-button nz-tooltip>TL</button>
+    <button nzTitle="prompt text" nzPlacement="top" nz-button nz-tooltip>Top</button>
+    <button nzTitle="prompt text" nzPlacement="topRight" nz-button nz-tooltip>TR</button>
+</div>
+<div style="float:left;width: 60px;">
+    <button nzTitle="prompt text" nzPlacement="leftTop" nz-button nz-tooltip>LT</button>
+    <button nzTitle="prompt text" nzPlacement="left" nz-button nz-tooltip>Left</button>
+    <button nzTitle="prompt text" nzPlacement="leftBottom" nz-button nz-tooltip>LB</button>
+</div>
+<div style="margin-left:270px;width: 60px;">
+    <button nzTitle="prompt text" nzPlacement="rightTop" nz-button nz-tooltip>RT</button>
+    <button nzTitle="prompt text" nzPlacement="right" nz-button nz-tooltip>Right</button>
+    <button nzTitle="prompt text" nzPlacement="rightBottom" nz-button nz-tooltip>RB</button>
+</div>
+<div style="margin-left:60px;clear: both;">
+    <button nzTitle="prompt text" nzPlacement="bottomLeft" nz-button nz-tooltip>BL</button>
+    <button nzTitle="prompt text" nzPlacement="bottom" nz-button nz-tooltip>Bottom</button>
+    <button nzTitle="prompt text" nzPlacement="bottomRight" nz-button nz-tooltip>BR</button>
+</div>
+
+<nz-divider></nz-divider>
+
+<h2>树形结构</h2>
+<h3>常用功能</h3>
+<span>基本结构、勾选、拖动、搜索、连线、自定义图标</span>
+<nz-input-group [nzSuffix]="suffixIcon">
+    <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue">
+</nz-input-group>
+<ng-template #suffixIcon>
+    <i nz-icon type="search"></i>
+</ng-template>
+<nz-tree
+    #treeCom
+    [nzData]="nodes"
+    nzCheckable="true"
+    nzMultiple="true"
+    nzShowLine="true"
+    [nzSearchValue]="searchValue"
+    [nzCheckedKeys]="defaultCheckedKeys"
+    [nzExpandedKeys]="defaultExpandedKeys"
+    [nzSelectedKeys]="defaultSelectedKeys"
+    (nzClick)="nzEvent($event)"
+    (nzExpandChange)="nzEvent($event)"
+    (nzCheckBoxChange)="nzEvent($event)"
+    (nzSearchValueChange)="nzEvent($event)">
+</nz-tree>
+
+<h3>拖动</h3>
+<nz-tree
+    [nzData]="_nodes_"
+    nzDraggable="true"
+    nzDraggable="true"
+    (nzOnDragStart)="nzEvent($event)"
+    (nzOnDragEnter)="nzEvent($event)"
+    (nzOnDragLeave)="nzEvent($event)"
+    (nzOnDrop)="nzEvent($event)"
+    (nzOnDragEnd)="nzEvent($event)">
+</nz-tree>
+
+<h3>异步加载数据</h3>
+<nz-tree
+    [nzData]="_nodes"
+    nzAsyncData="true"
+    (nzClick)="nzEvent($event)"
+    (nzExpandChange)="nzEvent($event)">
+</nz-tree>
+
+<h3>目录</h3>
+
+<nz-tree
+    #_treeCom
+    [nzData]="nodes_"
+    nzMultiple="true"
+    (nzClick)="activeNode($event)"
+    (nzDblClick)="openFolder($event)">
+    <ng-template #contextTemplate>
+        <ul nz-menu nzInDropDown>
+            <li nz-menu-item (click)="selectDropdown('file')">新建文件</li>
+            <li nz-menu-item (click)="selectDropdown('folder')">新建文件夹</li>
+        </ul>
+    </ng-template>
+    <ng-template #nzTreeTemplate let-node>
+        <span class="custom-node" [class.active]="activedNode?.key===node.key">
+          <span *ngIf="!node.isLeaf" (contextmenu)="contextMenu($event,contextTemplate)">
+            <i nz-icon [type]="node.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(node)"></i>
+            <span class="folder-name">{{node.title}}</span>
+            <span class="folder-desc">created by {{node?.origin?.author | lowercase}}</span>
+          </span>
+          <span *ngIf="node.isLeaf">
+            <i nz-icon type="file"></i>
+            <span class="file-name">{{node.title}}</span>
+            <span class="file-desc">modified by {{node?.origin?.author | lowercase}}</span>
+          </span>
+        </span>
+    </ng-template>
+</nz-tree>
+
+<nz-divider></nz-divider>

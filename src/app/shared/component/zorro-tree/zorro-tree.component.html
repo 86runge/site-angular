@@ -1,0 +1,42 @@
+<nz-input-group [nzSuffix]="suffixIcon">
+    <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" (keydown.enter)="_nzSearchValue = searchValue">
+</nz-input-group>
+<ng-template #suffixIcon>
+    <i nz-icon type="search" (click)="_nzSearchValue = searchValue"></i>
+</ng-template>
+<nz-tree
+    #treeCom
+    [nzData]="_nodes"
+    [nzExpandedKeys]="_nzExpandedKeys"
+    [nzCheckedKeys]="_nzCheckedKeys"
+    [nzSelectedKeys]="_nzSelectedKeys"
+    [nzSearchValue]="_nzSearchValue"
+
+    [nzExpandAll]="_nzExpandAll"
+    [nzCheckable]="_nzCheckable"
+    [nzMultiple]="_nzMultiple"
+    [nzCheckStrictly]="_nzCheckStrictly"
+
+    [nzShowExpand]="_nzShowExpand"
+    [nzShowLine]="_nzShowLine"
+    [nzShowIcon]="_nzShowIcon"
+    [nzAsyncData]="_nzAsyncData"
+    [nzDraggable]="_nzDraggable"
+    [nzBeforeDrop]="_nzBeforeDrop"
+
+    (nzClick)="nzClick($event)"
+    (nzDblClick)="nzDblClick($event)"
+    (nzContextMenu)="nzContextMenu($event)"
+
+    (nzCheckBoxChange)="nzCheckBoxChange($event)"
+    (nzExpandChange)="nzExpandChange($event)"
+
+    (nzSearchValueChange)="nzSearchValueChange($event)"
+
+    (nzOnDragStart)="nzOnDragStart($event)"
+    (nzOnDragEnter)="nzOnDragEnter($event)"
+    (nzOnDragOver)="nzOnDragOver($event)"
+    (nzOnDragLeave)="nzOnDragLeave($event)"
+    (nzOnDrop)="nzOnDrop($event)"
+    (nzOnDragEnd)="nzOnDragEnd($event)"
+></nz-tree>

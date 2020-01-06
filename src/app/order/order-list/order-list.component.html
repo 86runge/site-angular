@@ -1,0 +1,376 @@
+<h1>表格功能</h1>
+<nz-divider></nz-divider>
+
+<h2>表格过滤排序</h2>
+<div class="table-operations">
+    <button nz-button (click)="sort('age','descend')">Sort age</button>
+    <button nz-button (click)="resetFilters()">Clear filters</button>
+    <button nz-button (click)="resetSortAndFilters()">Clear filters and sorters</button>
+</div>
+<nz-table #filterTable [nzData]="displayData">
+    <thead>
+    <tr>
+        <th nzShowSort nzShowFilter [(nzSort)]="sortMap.name" (nzSortChange)="sort('name',$event)"
+            [nzFilters]="filterNameList" (nzFilterChange)="search($event,searchAddressList)">Name
+        </th>
+        <th nzShowSort [(nzSort)]="sortMap.age" (nzSortChange)="sort('age',$event)">Age</th>
+        <th nzShowSort nzShowFilter [(nzSort)]="sortMap.address" (nzSortChange)="sort('address',$event)"
+            [nzFilters]="filterAddressList" (nzFilterChange)="search(searchNameList,$event)">Address
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of filterTable.data">
+        <td>{{data.name}}</td>
+        <td>{{data.age}}</td>
+        <td>{{data.address}}</td>
+    </tr>
+    </tbody>
+</nz-table>
+
+<nz-divider></nz-divider>
+
+<h2>表头分组</h2>
+<nz-table
+    #groupingTable
+    [nzData]="_displayData"
+    nzBordered
+    nzSize="middle"
+    [nzWidthConfig]="['100px','200px','200px','100px','100px',null,null,'60px']"
+    [nzScroll]="{ x:'130%',y: '240px' }">
+    <thead>
+    <tr>
+        <th rowspan="4" nzLeft="0px" nzShowFilter [nzFilters]="filterName" (nzFilterChange)="search($event)">Name</th>
+        <th colspan="4">Other</th>
+        <th colspan="2">Company</th>
+        <th rowspan="4" nzRight="0px">Gender</th>
+    </tr>
+    <tr>
+        <th rowspan="3" nzShowSort [(nzSort)]="_sortValue" (nzSortChange)="_search(searchName)">Age</th>
+        <th colspan="3">Address</th>
+        <th rowspan="3">Company Address</th>
+        <th rowspan="3">Company Name</th>
+    </tr>
+    <tr>
+        <th rowspan="2">Street</th>
+        <th colspan="2">Block</th>
+    </tr>
+    <tr>
+        <th>Building</th>
+        <th>Door No.</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of groupingTable.data">
+        <td nzLeft="0px">{{data.name}}</td>
+        <td>{{data.age}}</td>
+        <td>{{data.street}}</td>
+        <td>{{data.building}}</td>
+        <td>{{data.number}}</td>
+        <td>{{data.companyAddress}}</td>
+        <td>{{data.companyName}}</td>
+        <td nzRight="0px">{{data.gender}}</td>
+    </tr>
+    </tbody>
+</nz-table>
+
+<nz-divider></nz-divider>
+
+<h2>表格可编辑功能</h2>
+<nz-table
+    #editRowTable
+    nzBordered
+    [nzData]="dataSet">
+    <thead>
+    <tr>
+        <th nzWidth="25%">Name</th>
+        <th nzWidth="15%">Age</th>
+        <th nzWidth="40%">Address</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of editRowTable.data">
+        <td>
+            <div class="editable-cell">
+                <div class="editable-cell-text-wrapper">
+                    <ng-container *ngIf="!editCache[data.key].edit">
+                        {{data.name}}
+                    </ng-container>
+                    <ng-container *ngIf="editCache[data.key].edit">
+                        <input type="text" nz-input [(ngModel)]="editCache[data.key].data.name">
+                    </ng-container>
+                </div>
+            </div>
+        </td>
+        <td>
+            <ng-container *ngIf="!editCache[data.key].edit">
+                {{data.age}}
+            </ng-container>
+            <ng-container *ngIf="editCache[data.key].edit">
+                <input type="text" nz-input [(ngModel)]="editCache[data.key].data.age">
+            </ng-container>
+        </td>
+        <td>
+            <ng-container *ngIf="!editCache[data.key].edit">
+                {{data.address}}
+            </ng-container>
+            <ng-container *ngIf="editCache[data.key].edit">
+                <input type="text" nz-input [(ngModel)]="editCache[data.key].data.address">
+            </ng-container>
+        </td>
+        <td>
+            <div class="editable-row-operations">
+                <ng-container *ngIf="!editCache[data.key].edit">
+                    <a (click)="startEdit(data.key)">Edit</a>
+                </ng-container>
+                <ng-container *ngIf="editCache[data.key].edit">
+                    <a (click)="saveEdit(data.key)">Save</a>
+                    <nz-popconfirm [nzTitle]="'Sure to cancel?'" (nzOnConfirm)="cancelEdit(data.key)">
+                        <a nz-popconfirm>Cancel</a>
+                    </nz-popconfirm>
+                </ng-container>
+                <ng-container>
+                    <nz-popconfirm [nzTitle]="'Sure to delete?'" (nzOnConfirm)="deleteRow(data.key)">
+                        <a nz-popconfirm>Delete</a>
+                    </nz-popconfirm>
+                </ng-container>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</nz-table>
+
+<nz-divider></nz-divider>
+
+<h2>嵌套子表格</h2>
+<nz-table #nestedTable [nzData]="nestedTableData" [nzPageSize]="10">
+    <thead>
+    <tr>
+        <th nzShowExpand></th>
+        <th>Name</th>
+        <th>Platform</th>
+        <th>Version</th>
+        <th>Upgraded</th>
+        <th>Creator</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-template ngFor let-data [ngForOf]="nestedTable.data">
+        <tr>
+            <td nzShowExpand [(nzExpand)]="data.expand"></td>
+            <td>{{data.name}}</td>
+            <td>{{data.platform}}</td>
+            <td>{{data.version}}</td>
+            <td>{{data.upgradeNum}}</td>
+            <td>{{data.creator}}</td>
+            <td>{{data.createdAt}}</td>
+            <td>
+                <a>Publish</a>
+            </td>
+        </tr>
+        <tr [nzExpand]="data.expand">
+            <td></td>
+            <td colspan="7">
+                <nz-table #innerTable [nzData]="innerTableData" nzSize="middle" [nzShowPagination]="false">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Upgrade Status</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of innerTable.data">
+        <td>{{data.date}}</td>
+        <td>{{data.name}}</td>
+        <td>
+            <nz-badge [nzStatus]="'success'" [nzText]="'Finished'"></nz-badge>
+        </td>
+        <td>{{data.upgradeNum}}</td>
+        <td>
+          <span class="table-operation">
+            <nz-dropdown>
+              <a nz-dropdown class="operation">
+                Pause <i nz-icon type="down"></i>
+              </a>
+              <ul nz-menu>
+                <li nz-menu-item>
+                  <a>Action 1</a>
+                </li>
+                <li nz-menu-item>
+                  <a>Action 2</a>
+                </li>
+              </ul>
+            </nz-dropdown>
+            <a class="operation">Stop</a>
+            <a>More</a>
+          </span>
+        </td>
+    </tr>
+    </tbody>
+</nz-table>
+</td>
+</tr>
+</ng-template>
+</tbody>
+</nz-table>
+
+<nz-divider></nz-divider>
+<h2>动态控制表格属性</h2>
+<h3>这里可以定制表格的一些属性</h3>
+<div class="components-table-demo-control-bar">
+    <form nz-form nzLayout="inline">
+        <nz-form-item>
+            <nz-form-label>
+                <label>Bordered</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="bordered" name="bordered"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>Loading</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="loading" name="loading"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>Pagination</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="pagination" name="pagination"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>Title</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="title" name="title"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>Column Header</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="header" name="header"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>Footer</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="footer" name="footer"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>Expandable</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="expandable" name="expandable"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>Checkbox</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="checkbox" name="checkbox"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>Fixed Header</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="fixHeader" name="fixHeader"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>No Result</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="noResult" (ngModelChange)="noResultChange($event)" name="noResult"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>Simple Pagination</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-switch [(ngModel)]="simple" name="simple"></nz-switch>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label>
+                <label>Size</label>
+            </nz-form-label>
+            <nz-form-control>
+                <nz-radio-group [(ngModel)]="size" name="size">
+                    <label nz-radio-button nzValue="default">Default</label>
+                    <label nz-radio-button nzValue="middle">Middle</label>
+                    <label nz-radio-button nzValue="small">Small</label>
+                </nz-radio-group>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</div>
+<nz-table
+    #dynamicTable
+    (nzCurrentPageDataChange)="currentPageDataChange($event)"
+    [nzScroll]="fixHeader?{ y: '240px' }:null"
+    [nzData]="_dataSet"
+    [nzBordered]="bordered"
+    [nzSimple]="simple"
+    [nzLoading]="loading"
+    [nzFrontPagination]="pagination"
+    [nzShowPagination]="pagination"
+    [nzFooter]="footer?'Here is Footer':null"
+    [nzTitle]="title?'Here is Title':null"
+    [nzSize]="size">
+    <thead>
+    <tr *ngIf="header">
+        <th nzWidth="50px" nzShowExpand *ngIf="expandable"></th>
+        <th nzWidth="62px" nzShowCheckbox *ngIf="checkbox" [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate"
+            (nzCheckedChange)="checkAll($event)"></th>
+        <th nzWidth="150px">Name</th>
+        <th nzWidth="70px">Age</th>
+        <th>Address</th>
+        <th nzWidth="260px">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-template ngFor let-data [ngForOf]="dynamicTable.data">
+        <tr>
+            <td nzShowExpand *ngIf="expandable" [(nzExpand)]="data.expand"></td>
+            <td nzShowCheckbox *ngIf="checkbox" [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
+            <td>{{data.name}}</td>
+            <td>{{data.age}}</td>
+            <td>{{data.address}}</td>
+            <td>
+                <a href="#">Action 一 {{data.name}}</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a href="#">Delete</a>
+            </td>
+        </tr>
+        <tr [nzExpand]="data.expand&&expandable">
+            <td></td>
+            <td [attr.colspan]="checkbox?5:4">{{data.description}}</td>
+        </tr>
+    </ng-template>
+    </tbody>
+</nz-table>
+
+<nz-divider></nz-divider>

@@ -1,0 +1,130 @@
+<h2>时间选择器</h2>
+<nz-date-picker
+    nzShowTime
+    nzFormat="yyyy-MM-dd HH:mm:ss"
+    nzPlaceHolder="Select Time"
+    (ngModelChange)="onChange($event)"
+    (nzOnOk)="onOk($event)"
+></nz-date-picker>
+<nz-divider></nz-divider>
+<nz-month-picker
+    nzShowTime
+    nzFormat="yyyy-MM"
+    nzPlaceHolder="Select month"
+    (ngModelChange)="onChange($event)"
+    (nzOnOk)="onOk($event)"
+></nz-month-picker>
+<nz-divider></nz-divider>
+<nz-year-picker
+    nzShowTime
+    nzFormat="yyyy"
+    nzPlaceHolder="Select year"
+    (ngModelChange)="onChange($event)"
+    (nzOnOk)="onOk($event)"
+></nz-year-picker>
+<nz-divider></nz-divider>
+<nz-week-picker
+    nzShowTime
+    nzFormat=""
+    nzPlaceHolder="Select week"
+    [(ngModel)]="date"
+    (ngModelChange)="getWeek($event)"
+    (nzOnOk)="onOk($event)"
+></nz-week-picker>
+<nz-divider></nz-divider>
+<nz-range-picker
+    [nzShowTime]="{ nzFormat: 'HH:mm' }"
+    nzFormat="yyyy-MM-dd HH:mm"
+    [nzPlaceHolder]="[ 'Start Time', 'End Time' ]"
+    (ngModelChange)="onChange($event)"
+    (nzOnOk)="onOk($event)"
+></nz-range-picker>
+
+<nz-divider></nz-divider>
+
+<h2>锚点</h2>
+<nz-anchor>
+    <nz-link nzHref="#components-anchor-demo-basic" nzTitle="Basic demo"></nz-link>
+    <nz-link nzHref="#components-anchor-demo-static" nzTitle="Static demo"></nz-link>
+    <nz-link nzHref="#API" nzTitle="API">
+        <nz-link nzHref="#anchor-props" nzTitle="nz-anchor"></nz-link>
+        <nz-link nzHref="#link-props" nzTitle="nz-link"></nz-link>
+    </nz-link>
+</nz-anchor>
+
+<nz-divider></nz-divider>
+
+<h2>评分</h2>
+<nz-rate [ngModel]="2.5" nzAllowHalf></nz-rate>
+
+<nz-divider></nz-divider>
+
+<h2>下拉框</h2>
+<nz-select [nzMaxMultipleCount]="3" style="width: 100%" nzMode="multiple" nzPlaceHolder="Please select"
+           [(ngModel)]="listOfSelectedValue">
+    <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+</nz-select>
+
+<nz-divider></nz-divider>
+
+<h2>滑动条</h2>
+<nz-slider
+    [nzDefaultValue]="30"
+    [(ngModel)]="singleValue" (ngModelChange)="onChange($event)"
+    (nzOnAfterChange)="onAfterChange($event)"
+></nz-slider>
+<nz-divider></nz-divider>
+<nz-slider
+    nzRange
+    [nzStep]="10"
+    [nzDefaultValue]="[20, 50]"
+    [(ngModel)]="rangeValue" (ngModelChange)="onChange($event)"
+    (nzOnAfterChange)="onAfterChange($event)"
+></nz-slider>
+<nz-divider></nz-divider>
+
+<div [ngStyle]="{ height: '300px' }">
+    <div [ngStyle]="style">
+        <nz-slider nzVertical [nzDefaultValue]="30"></nz-slider>
+    </div>
+    <div [ngStyle]="style">
+        <nz-slider nzVertical nzRange [nzStep]="10" [nzDefaultValue]="[20, 50]"></nz-slider>
+    </div>
+    <div [ngStyle]="style">
+        <nz-slider nzVertical nzRange [nzMarks]="marks" [nzDefaultValue]="[26, 37]"></nz-slider>
+    </div>
+</div>
+
+<nz-divider></nz-divider>
+
+
+<h2>穿梭框</h2>
+<nz-transfer
+    [nzDataSource]="list"
+    nzShowSearch
+    [nzOperations]="['to right', 'to left']"
+    [nzListStyle]="{'width.px': 250, 'height.px': 300}"
+    [nzRender]="render"
+    [nzFooter]="footer"
+    (nzSelectChange)="select($event)"
+    (nzChange)="change($event)">
+    <ng-template #render let-item>
+        {{ item.title }}-{{ item.description }}
+    </ng-template>
+    <ng-template #footer let-direction>
+        <button nz-button (click)="reload(direction)" [nzSize]="'small'" style="float: right; margin: 5px;">reload
+        </button>
+    </ng-template>
+</nz-transfer>
+
+<nz-divider></nz-divider>
+
+<h2>返回顶部</h2>
+<nz-back-top></nz-back-top>
+
+<!--可以在某个容器内滚动-->
+<!--<div class="long-div" #divTarget>-->
+<!--<div class="long-div-inner"></div>-->
+<!--<nz-back-top [nzTarget]="divTarget"></nz-back-top>-->
+<!--</div>-->
+

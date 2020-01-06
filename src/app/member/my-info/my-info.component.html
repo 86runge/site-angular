@@ -1,0 +1,43 @@
+<h3>地图</h3>
+<div class="map-content">
+    <mysite-echarts id="echarts_content"
+                    [options]="options"
+                    [geoJson]="geoJson"
+                    [width]="width"
+                    [height]="height"
+                    (initComplete)="initComplete($event)"
+                    (contextmenu)="contextMenu($event,contextTemplate)"
+    ></mysite-echarts>
+    <ng-template #contextTemplate>
+        <ul nz-menu nzInDropDown>
+            <li *ngIf="isUpable" nz-menu-item (click)="selectDropdown('up')">上钻</li>
+            <li *ngIf="isDownable" nz-menu-item (click)="selectDropdown('down')">下钻</li>
+            <li nz-menu-item (click)="selectDropdown('cancel')">取消</li>
+        </ul>
+    </ng-template>
+</div>
+<div>
+    <span>手动切换地图</span>
+    <nz-radio-group>
+        <label nz-radio-button (click)="initCountry('world')">世界地图</label>
+        <label nz-radio-button (click)="initCountry('Australia')">Australia</label>
+        <label nz-radio-button (click)="initCountry('Brazil')">Brazil</label>
+        <label nz-radio-button (click)="initCountry('Canada')">Canada</label>
+        <label nz-radio-button (click)="initCountry('England')">England</label>
+        <label nz-radio-button (click)="initCountry('China')">China</label>
+        <label nz-radio-button (click)="initCountry('Finland')">Finland</label>
+        <label nz-radio-button (click)="initCountry('German')">German</label>
+        <label nz-radio-button (click)="initCountry('Iceland')">Iceland</label>
+        <label nz-radio-button (click)="initCountry('India')">India</label>
+        <label nz-radio-button (click)="initCountry('Japan')">Japan</label>
+        <label nz-radio-button (click)="initCountry('Portugal')">Portugal</label>
+        <label nz-radio-button (click)="initCountry('Singapore')">Singapore</label>
+        <label nz-radio-button (click)="initCountry('SouthAfrica')">SouthAfrica</label>
+        <label nz-radio-button (click)="initCountry('SouthKorea')">SouthKorea</label>
+        <label nz-radio-button (click)="initCountry('Spain')">Spain</label>
+        <label nz-radio-button (click)="initCountry('Sweden')">Sweden</label>
+        <label nz-radio-button (click)="initCountry('Swiss')">Swiss</label>
+    </nz-radio-group>
+</div>
+
+<nz-divider></nz-divider>
