@@ -73,7 +73,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "less-loader": "^4.0.0",
     "minimist": "^1.2.0",
-    "ng-packagr": "^4.4.0",
+    "ng-packagr": "^10.1.1",
     "opener": "^1.4.3",
     "postcss-loader": "^3.0.0",
     "postcss-url": "^8.0.0",
